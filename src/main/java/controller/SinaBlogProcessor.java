@@ -1,3 +1,4 @@
+/*
 package controller;
 
 import us.codecraft.webmagic.Page;
@@ -6,9 +7,11 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.pipeline.JsonFilePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 
+*/
 /**
  * @author code4crafter@gmail.com <br>
- */
+ *//*
+
 public class SinaBlogProcessor implements PageProcessor {
 
     public static final String URL_LIST = "http://blog\\.sina\\.com\\.cn/s/articlelist_1487828712_0_\\d+\\.html";
@@ -42,10 +45,6 @@ public class SinaBlogProcessor implements PageProcessor {
         return site;
     }
 
-    public static void main(String[] args) {
-        Spider.create(new SinaBlogProcessor())
-                .addUrl("http://blog.sina.com.cn/s/articlelist_1487828712_0_1.html")
-                .addPipeline(new JsonFilePipeline("D:\\test\\"))
-                .run();
-    }
+
 }
+*/

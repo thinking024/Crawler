@@ -1,4 +1,5 @@
-import controller.GithubRepoPageProcessor;
+//import controller.GithubRepoPageProcessor;
+//import controller.SinaBlogProcessor;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -7,8 +8,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.pipeline.JsonFilePipeline;
+//import us.codecraft.webmagic.Spider;
+//import us.codecraft.webmagic.pipeline.JsonFilePipeline;
 import util.VideoCrawler;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ import java.util.Hashtable;
 
 public class Test {
 
-    @org.junit.Test
+    /*@org.junit.Test
     public void test() {
         Spider.create(new GithubRepoPageProcessor())
                 //从"https://github.com/code4craft"开始抓
@@ -27,7 +28,7 @@ public class Test {
                 .thread(5)
                 //启动爬虫
                 .run();
-    }
+    }*/
     
     @org.junit.Test
     public void testHttpClient() {
@@ -86,4 +87,12 @@ public class Test {
             System.out.println(o);
         }
     }
+
+    /*@org.junit.Test
+    public void Sina() {
+        Spider.create(new SinaBlogProcessor())
+                .addUrl("http://blog.sina.com.cn/s/articlelist_1487828712_0_1.html")
+                .addPipeline(new JsonFilePipeline("D:\\test\\"))
+                .run();
+    }*/
 }
