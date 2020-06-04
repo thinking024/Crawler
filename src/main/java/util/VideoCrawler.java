@@ -48,7 +48,7 @@ public class VideoCrawler {
         HashSet hashSet = new HashSet();
         String html = getVideoHtml(url);
         Document document = Jsoup.parse(html);
-        Elements elements = document.getElementsByClass("video-item matrix"); // 按类名获取视频列表
+        Elements elements = document.getElementsByClass("rank-item matrix"); // 按类名获取视频列表
         for (Element element : elements) {
             System.out.println(element);
             Element select = element.select("a[href]").first(); // 获取每个视频列表中的<a href ></a>标签对

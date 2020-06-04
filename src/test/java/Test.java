@@ -86,4 +86,12 @@ public class Test {
             System.out.println(o);
         }
     }
+
+    public static void main(String[] args) {
+
+        HashSet hashSet = VideoCrawler.parseVideoHtml("https://www.bilibili.com/ranking?spm_id_from=333.851.b_7072696d61727950616765546162.3");
+        for (Object o : hashSet) {
+            System.out.println(o);
+        }
+    }
 }

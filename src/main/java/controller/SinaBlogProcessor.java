@@ -45,7 +45,7 @@ public class SinaBlogProcessor implements PageProcessor {
     public static void main(String[] args) {
         Spider.create(new SinaBlogProcessor())
                 .addUrl("http://blog.sina.com.cn/s/articlelist_1487828712_0_1.html")
-                .addPipeline(new JsonFilePipeline("D:\\test\\"))
+                //.addPipeline(new JsonFilePipeline("D:\\test\\"))
                 .run();
     }
 }

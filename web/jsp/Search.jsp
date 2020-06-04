@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String url = "https://search.bilibili.com/all?keyword=" + request.getParameter("keyword");
+    VideoCrawler videoCrawler = new VideoCrawler();
 %>
 <html>
 <head>
