@@ -1,5 +1,6 @@
 package util;
 
+import model.Video;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -15,49 +16,115 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 
-public class VideoCrawler {
-    public static String getVideoHtml(String url) {
-        // 建立一个请求客户端
-        CloseableHttpClient httpClient= HttpClients.createDefault();
-        // 使用HttpGet的方式请求网址
-        HttpGet httpGet = new HttpGet(url);
-        // 设置请求头
-        httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2");
-        // 获取网址的返回结果
-        CloseableHttpResponse response=null;
-        try {
-            response=httpClient.execute(httpGet);
-            // 获取返回结果中的实体
-            HttpEntity entity = response.getEntity();
-            return EntityUtils.toString(entity);
-        } /*catch (ClientProtocolException e) {
-            e.printStackTrace();
-        }*/ catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            HttpClientUtils.closeQuietly(response);
-            HttpClientUtils.closeQuietly(httpClient);
-        }
+public class VideoCrawler extends Crawler {
 
-        return null;
-    }
+    // 解析爬取到的结果
+    public static ArrayList<Video> parseVideoListHtml(String url) {
 
-    public static HashSet parseVideoHtml(String url) {
-        HashSet hashSet = new HashSet();
+        ArrayList<Video> videoList =new ArrayList<Video>();
         String html = getVideoHtml(url);
         Document document = Jsoup.parse(html);
         Elements elements = document.getElementsByClass("video-item matrix"); // 按类名获取视频列表
-        for (Element element : elements) {
+        System.out.println(document.getElementsByClass("page-item last").text()); // 获取页码
+        for (Element element : elements) { // 对每个视频提取数据，并把数据存在Video类中
             System.out.println(element);
-            Element select = element.select("a[href]").first(); // 获取每个视频列表中的<a href ></a>标签对
-            String href = select.attr("href"); // 提取视频链接
-            int index = href.indexOf("?");
-            System.out.println(href.substring(2, index)); // 处理链接中多余的符号
-            hashSet.add(href.substring(2, index));
-            System.out.println("");
+
+            Video video = new Video();
+
+            String href = element.selectFirst("a[href]").attr("href"); // 提取视频链接
+            int index_href = href.indexOf("?");
+            String realHref = "https://"+ href.substring(2, index_href);// 处理链接中多余的符号
+            video.setHref(realHref);
+            System.out.println(realHref);
+
+            String title = element.selectFirst("a[href]").attr("title");
+            video.setTitle(title);
+            System.out.println(title);
+
+            String play = element.selectFirst("[title=\"观看\"]").text();
+            video.setPlay(play);
+            System.out.println(play);
+
+            String danmu = element.selectFirst("[title=\"弹幕\"]").text();
+            video.setDanmu(danmu);
+            System.out.println(danmu);
+
+            String uploadTime = element.selectFirst("[title=\"上传时间\"]").text();
+            video.setUploadTime(uploadTime);
+            System.out.println(uploadTime);
+
+            Element up = element.getElementsByClass("up-name").first();
+            //System.out.println(up);
+            String upName = up.text();
+            video.setUpName(upName);
+
+            String upUrl = up.attr("href");
+            int index_upUrl = upUrl.indexOf("?");
+            String realupUrl = "https://"+ upUrl.substring(2, index_upUrl);// 处理链接中多余的符号
+            video.setUpUrl(realupUrl);
+            System.out.println(upName);
+            System.out.println(realupUrl);
+
+            String length = element.getElementsByClass("so-imgTag_rb").first().text();
+            video.setLength(length);
+            System.out.println(length);
+
+            String description = element.getElementsByClass("des hide").first().text();
+            video.setDescription(description);
+            System.out.println(description);
+
+            /*String image = parseVideoInfoHtml(realHref);
+            video.setImage(image);
+            System.out.println(image+"\n\n\n");*/
+
+            videoList.add(video);
         }
-        return hashSet;
+        return videoList;
+    }
+
+    /*public static ArrayList getPageNumber(String url) {
+        ArrayList<Video> videoList = new ArrayList<Video>();
+        String html = getVideoHtml(url);
+        Document document = Jsoup.parse(html);
+        Elements elements = document.getElementsByClass("video-item matrix"); // 按类名获取视频列表
+        int pageNumber = Integer.valueOf(document.getElementsByClass("page-item last").text());
+        for (int i = 1;i <=pageNumber;i ++) {
+            parseVideoListHtml(url+"&page="+i,videoList);
+        }
+        System.out.println("\n\n"+videoList.size());
+        return videoList;
+    }*/
+
+    public static String parseVideoInfoHtml(String url) {
+        String html = getVideoHtml(url);
+        Document document = Jsoup.parse(html);
+       /* System.out.println(document);
+
+        String title = document.getElementsByClass("tit").first().text();
+        System.out.println(title);
+
+        String uploadTime = document.getElementsByClass("video-data").first()
+                .getElementsByTag("span").last().text();
+        System.out.println(uploadTime);
+
+        String play = document.getElementsByClass("video-data").last()
+                .getElementsByClass("view").first().text();
+        System.out.println(play);
+
+        String danmu = document.getElementsByClass("video-data").last()
+                .getElementsByClass("dm").first().text();
+        System.out.println(danmu);
+
+        String introduction = document.getElementsByClass("info open").first().text();
+        System.out.println(introduction);
+        String up = document.selectFirst("[itemprop=author]").attr("content");
+        System.out.println(up); */
+
+        String image = document.selectFirst("[itemprop=image]").attr("content");
+
+        return image;
     }
 }

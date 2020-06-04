@@ -1,5 +1,6 @@
 //import controller.GithubRepoPageProcessor;
 //import controller.SinaBlogProcessor;
+import model.Video;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -13,6 +14,7 @@ import org.apache.http.util.EntityUtils;
 import util.VideoCrawler;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 
@@ -80,19 +82,21 @@ public class Test {
         }
     }
 
-    @org.junit.Test
+    /*@org.junit.Test
     public void testVideoCrawler() {
-        HashSet hashSet = VideoCrawler.parseVideoHtml("https://search.bilibili.com/all?keyword=kpl");
-        for (Object o : hashSet) {
-            System.out.println(o);
+        ArrayList<Video> videos = VideoCrawler.getPageNumber("https://search.bilibili.com/all?keyword=kpl");
+        for (Video video : videos) {
+            System.out.println(video);
         }
+    }*/
+
+    @org.junit.Test
+    public void test_parseVideoInfoHtml() {
+        System.out.println(VideoCrawler.parseVideoInfoHtml("https://"+ "www.bilibili.com/video/BV19C4y1W7th"));
     }
 
-    /*@org.junit.Test
-    public void Sina() {
-        Spider.create(new SinaBlogProcessor())
-                .addUrl("http://blog.sina.com.cn/s/articlelist_1487828712_0_1.html")
-                .addPipeline(new JsonFilePipeline("D:\\test\\"))
-                .run();
-    }*/
+    @org.junit.Test
+    public void test_getVideoHtml() {
+        VideoCrawler.getVideoHtml("https://search.bilibili.com/all?keyword=kpl");
+    }
 }
