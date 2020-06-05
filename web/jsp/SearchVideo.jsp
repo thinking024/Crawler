@@ -97,12 +97,16 @@
       </div>
 
       <form action="SearchVideo.jsp">
+
+        <%--跳转页面时用到的keyword--%>
         <input type="text" name="keywordHidden" style="display: none" value=<%=keyword%>>
         <%
           if (order != "") // 未采用默认排序，提取出order字符串
               order = order.substring(7);
         %>
-        <input type="text" name="order" style="display: block" value=<%=order%>>
+          <%--跳转页面时用到的order--%>
+        <input type="text" name="order" style="display: none" value=<%=order%>>
+          <%--跳转页面时用到的pageNo--%>
         <input type="number" name="pageNo" required="required" min="1" max=<%=pageNumber%>>
         <input type="submit" value="跳到此页">
       </form>
