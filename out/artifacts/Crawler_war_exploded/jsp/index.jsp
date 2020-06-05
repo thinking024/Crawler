@@ -4,7 +4,7 @@
     <title>$Title$</title>
   </head>
   <body>
-    <form action="/jsp/Search.jsp">
+    <form action="/jsp/SearchVideo.jsp">
       <input type="text" name="keyword">
       <input type="submit">
     </form>

@@ -7,11 +7,13 @@ import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
 public class Crawler {
-    public static String getVideoHtml(String url) {
+    public static String getHtml(String url) {
         // 建立一个请求客户端
         CloseableHttpClient httpClient= HttpClients.createDefault();
         // 使用HttpGet的方式请求网址
@@ -35,5 +37,20 @@ public class Crawler {
         }
 
         return null;
+    }
+
+    public static int getPageNumber(String url) {
+        String html = getHtml(url);
+        Document document = Jsoup.parse(html);
+        if (document.getElementsByClass("no-content").first() != null) {  //搜索结果为空
+            return 0;
+        }
+        if (document.getElementsByClass("page-item last").first() != null) { // 有 末页 按钮
+            return Integer.valueOf(document.getElementsByClass("page-item last").text());
+        } else if (document.getElementsByClass("page-item next").first() != null) { // 获取 下一页 按钮的前个元素
+            return Integer.valueOf(document.getElementsByClass("page-item next").first().previousElementSibling().text());
+        } else {
+            return Integer.valueOf(document.getElementsByClass("page-item").last().text());
+        }
     }
 }

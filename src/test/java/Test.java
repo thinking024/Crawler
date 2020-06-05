@@ -1,6 +1,6 @@
 //import controller.GithubRepoPageProcessor;
 //import controller.SinaBlogProcessor;
-import model.Video;
+import model.User;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -11,12 +11,11 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 //import us.codecraft.webmagic.Spider;
 //import us.codecraft.webmagic.pipeline.JsonFilePipeline;
+import util.UserCrawler;
 import util.VideoCrawler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Hashtable;
 
 public class Test {
 
@@ -97,6 +96,22 @@ public class Test {
 
     @org.junit.Test
     public void test_getVideoHtml() {
-        VideoCrawler.getVideoHtml("https://search.bilibili.com/all?keyword=kpl");
+        VideoCrawler.getHtml("https://search.bilibili.com/all?keyword=kpl");
+
+
     }
+
+    @org.junit.Test
+    public void test_parseUpListHtml() {
+        ArrayList<User> users = UserCrawler.parseUserListHtml("https://search.bilibili.com/upuser?keyword=计算机");
+        for (User user : users) {
+            System.out.println(user);
+        }
+    }
+
+    @org.junit.Test
+    public void test_pageNumber() {
+        System.out.println(VideoCrawler.getPageNumber("https://search.bilibili.com/all?keyword=987987"));
+    }
+
 }
