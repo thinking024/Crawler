@@ -1,8 +1,14 @@
 <%@ page import="util.VideoCrawler" %>
 <%@ page import="model.Video" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="ErrorPage.jsp" %>
+<%@ page import="org.apache.ibatis.session.SqlSession" %>
+<%@ page import="util.MybatisUtils" %>
+<%@ page import="dao.HotWordMapper" %>
+<%@ page import="model.HotWord" %>
+<%@ page import="java.util.*" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%
+    request.setCharacterEncoding("utf-8");
     String keyword = null;
     if (request.getParameter("keyword") == null || "".equals(request.getParameter("keyword").trim())) {
         keyword = request.getParameter("keywordHidden"); // 初始页面 搜索空串 输入页码跳转 都走此分支
@@ -20,16 +26,35 @@
         order = "&order=" + request.getParameter("order"); // 赋值为获取到的order参数
     }
     if (keyword != null && !("".equals(keyword))) {
-      String url = "https://search.bilibili.com/all?keyword=" + keyword + order;
-      pageNumber = VideoCrawler.getPageNumber(url); // 获取搜索结果的总页数
-      if ( request.getParameter("pageNo") !=null && !("".equals(request.getParameter("pageNo")))) { // pageNo为跳转的页码数
-          pageNo = Integer.valueOf(request.getParameter("pageNo"));
-          url = url + "&page=" + pageNo;
-      }
-      System.out.println("url="+url);
-      videos = VideoCrawler.parseVideoListHtml(url);
+
+        String url = "https://search.bilibili.com/all?keyword=" + keyword + order;
+        pageNumber = VideoCrawler.getPageNumber(url); // 获取搜索结果的总页数
+        if ( request.getParameter("pageNo") !=null && !("".equals(request.getParameter("pageNo")))) { // pageNo为跳转的页码数
+            pageNo = Integer.valueOf(request.getParameter("pageNo"));
+            url = url + "&page=" + pageNo;
+        }
+        System.out.println("url="+url);
+        videos = VideoCrawler.parseVideoListHtml(url);
+
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
+        List<HotWord> hotWord = mapper.getHotWord(keyword.toLowerCase());
+        HashMap map = new HashMap();
+        map.put("table","hot_video");
+        map.put("keyword",keyword.toLowerCase());
+        if (hotWord == null || hotWord.isEmpty()) {
+            int result = mapper.insertHotWord(map);
+            System.out.println("result=" + result);
+        } else {
+            int result = mapper.updateHotWord(map);
+            System.out.println("result=" + result);
+        }
+
     }
 
+    SqlSession sqlSession = MybatisUtils.getSqlSession();
+    HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
+    List<HotWord> hotWord = mapper.getHotWord(null);
 %>
 <html>
 <head>
@@ -40,6 +65,19 @@
     <input type="text" name="keyword" required="required" onkeyup="this.value=this.value.replace(/[, ]/g,'')">
     <input type="submit">
   </form>
+
+  <%
+    for (HotWord word : hotWord) {
+      String hoturl = "SearchVideo.jsp?keyword=" + word.getKeyword();
+  %>
+      <a href=<%=hoturl%>>
+        <%=word.getKeyword()%>
+      </a>
+      <br>
+  <%
+    }
+  %>
+
 <%
   if (pageNumber != 0) {
 

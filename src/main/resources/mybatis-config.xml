@@ -7,7 +7,7 @@
     <!--引入外部配置文件-->
     <properties resource="db.properties">
         <!--也可直接在这里写property，不用从配置文件导入，会优先使用外部配置文件-->
-        <!--<property name="driver" value="com.mysql.cj.jdbc.Driver" />-->
+        <!--<property name="driver" value="com.mysql.jdbc.Driver" />-->
     </properties>
     
     <settings>
@@ -16,9 +16,6 @@
 
         <!--开启驼峰命名自动映射，即从经典数据库列名 A_COLUMN 映射到经典 Java 属性名 aColumn-->
         <setting name="mapUnderscoreToCamelCase" value="true" />
-        
-        <!--开启全局缓存-->
-        <setting name="cacheEnabled" value="true" />
     </settings>
 
     <typeAliases>
