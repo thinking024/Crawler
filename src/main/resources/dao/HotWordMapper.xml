@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace用于绑定一个Dao接口-->
+<mapper namespace="dao.HotWordMapper">
+    <select id="getHotWord" resultType="HotWord" parameterType="String">
+        select * from hot_video
+        <where>
+            <if test="keyword != null">
+                keyword = #{keyword}
+            </if>
+        </where>
+        <if test="true">
+            order by times desc limit 5
+        </if>
+    </select>
+
+    <!--动态传递表名，表名只能用${}而不能用#{}-->
+    <insert id="insertHotWord" parameterType="map">
+        insert into ${table} VALUES (#{keyword},1)
+    </insert>
+
+    <update id="updateHotWord" parameterType="map">
+        update ${table} set times = times + 1 where keyword=#{keyword}
+    </update>
+</mapper>

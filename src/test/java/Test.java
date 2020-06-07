@@ -1,5 +1,7 @@
 //import controller.GithubRepoPageProcessor;
 //import controller.SinaBlogProcessor;
+import dao.HotWordMapper;
+import model.HotWord;
 import model.User;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -11,11 +13,15 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 //import us.codecraft.webmagic.Spider;
 //import us.codecraft.webmagic.pipeline.JsonFilePipeline;
+import org.apache.ibatis.session.SqlSession;
+import util.MybatisUtils;
 import util.UserCrawler;
 import util.VideoCrawler;
 
 import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Test {
 
@@ -112,6 +118,67 @@ public class Test {
     @org.junit.Test
     public void test_pageNumber() {
         System.out.println(VideoCrawler.getPageNumber("https://search.bilibili.com/all?keyword=987987"));
+    }
+
+    @org.junit.Test
+    public void jdbc() {
+        Connection connection = null;
+        Statement statement = null;
+
+        String driver="com.mysql.jdbc.Driver";
+
+        String url="jdbc:mysql://47.107.103.168:3306/mysql?&useSSL=false&serverTimezone=UTC";
+        String user="root";
+        String password="root";
+            try {
+                //注册JDBC驱动程序
+                Class.forName(driver);
+                //建立连接
+                connection = DriverManager.getConnection(url, user, password);
+                statement = connection.createStatement();
+                if (!connection.isClosed()) {
+                    System.out.println("数据库连接成功");
+                }
+            } catch (ClassNotFoundException e) {
+                System.out.println("数据库驱动没有安装");
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+    }
+
+    @org.junit.Test
+    public void test_getBlogs() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
+        for (HotWord hotWord : mapper.getHotWord(null)) {
+            System.out.println(hotWord);
+        }
+        // Mybatis默认开启一级缓存，一级缓存的范围是SqlSession。
+        //sqlSession.clearCache();
+        sqlSession.close();
+    }
+
+    @org.junit.Test
+    public void test_insertBlogSet() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
+        HashMap map = new HashMap();
+        map.put("table","hot_video");
+        map.put("keyword","math");
+        int lines = mapper.insertHotWord(map);
+        sqlSession.close();
+    }
+
+    @org.junit.Test
+    public void test_updateBlogSet() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
+        HashMap map = new HashMap();
+        map.put("table","hot_video");
+        map.put("keyword","math");
+        int lines = mapper.updateHotWord(map);
+        sqlSession.close();
     }
 
 }
