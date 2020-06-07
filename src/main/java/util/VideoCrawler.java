@@ -83,10 +83,10 @@ public class VideoCrawler extends Crawler {
         return videoList;
     }
 
-    public static String parseVideoInfoHtml(String url) {
+    public static void parseVideoInfoHtml(String url) {
         String html = getHtml(url);
         Document document = Jsoup.parse(html);
-       /* System.out.println(document);
+        System.out.println(document);
 
         String title = document.getElementsByClass("tit").first().text();
         System.out.println(title);
@@ -106,10 +106,9 @@ public class VideoCrawler extends Crawler {
         String introduction = document.getElementsByClass("info open").first().text();
         System.out.println(introduction);
         String up = document.selectFirst("[itemprop=author]").attr("content");
-        System.out.println(up); */
+        System.out.println(up);
 
         String image = document.selectFirst("[itemprop=image]").attr("content");
-
-        return image;
+        System.out.println(image);
     }
 }

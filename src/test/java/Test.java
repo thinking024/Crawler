@@ -97,7 +97,7 @@ public class Test {
 
     @org.junit.Test
     public void test_parseVideoInfoHtml() {
-        System.out.println(VideoCrawler.parseVideoInfoHtml("https://"+ "www.bilibili.com/video/BV19C4y1W7th"));
+        VideoCrawler.parseVideoInfoHtml("https://"+ "www.bilibili.com/video/BV19C4y1W7th");
     }
 
     @org.junit.Test

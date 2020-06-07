@@ -27,6 +27,7 @@
     }
     if (keyword != null && !("".equals(keyword))) {
 
+//      爬取页面数据
         String url = "https://search.bilibili.com/all?keyword=" + keyword + order;
         pageNumber = VideoCrawler.getPageNumber(url); // 获取搜索结果的总页数
         if ( request.getParameter("pageNo") !=null && !("".equals(request.getParameter("pageNo")))) { // pageNo为跳转的页码数
@@ -36,6 +37,7 @@
         System.out.println("url="+url);
         videos = VideoCrawler.parseVideoListHtml(url);
 
+//      实现热搜词汇功能
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
         List<HotWord> hotWord = mapper.getHotWord(keyword.toLowerCase());
