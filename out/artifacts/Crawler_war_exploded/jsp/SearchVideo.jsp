@@ -40,14 +40,14 @@
 //      实现热搜词汇功能
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
-        List<HotWord> hotWord = mapper.getHotWord(keyword.toLowerCase());
         HashMap map = new HashMap();
         map.put("table","hot_video");
         map.put("keyword",keyword.toLowerCase());
-        if (hotWord == null || hotWord.isEmpty()) {
+        List<HotWord> hotWord = mapper.getHotWord(map);
+        if (hotWord == null || hotWord.isEmpty()) { // 不存在此热搜词，存入数据库
             int result = mapper.insertHotWord(map);
             System.out.println("result=" + result);
-        } else {
+        } else { // 已存在此热搜词，次数+1
             int result = mapper.updateHotWord(map);
             System.out.println("result=" + result);
         }
@@ -56,7 +56,9 @@
 
     SqlSession sqlSession = MybatisUtils.getSqlSession();
     HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
-    List<HotWord> hotWord = mapper.getHotWord(null);
+    HashMap map = new HashMap();
+    map.put("table","hot_video");
+    List<HotWord> hotWord = mapper.getHotWord(map);
 %>
 <html>
 <head>
@@ -70,9 +72,9 @@
 
   <%
     for (HotWord word : hotWord) {
-      String hoturl = "SearchVideo.jsp?keyword=" + word.getKeyword();
+      String hotUrl = "SearchVideo.jsp?keyword=" + word.getKeyword();
   %>
-      <a href=<%=hoturl%>>
+      <a href=<%=hotUrl%>>
         <%=word.getKeyword()%>
       </a>
       <br>

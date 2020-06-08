@@ -2,18 +2,22 @@
 <%@ page import="util.MybatisUtils" %>
 <%@ page import="dao.HotWordMapper" %>
 <%@ page import="model.HotWord" %>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     SqlSession sqlSession = MybatisUtils.getSqlSession();
     HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
-    List<HotWord> hotWord = mapper.getHotWord(null);
+    HashMap map = new HashMap();
+    map.put("table","hot_video");
+    List<HotWord> hotWord = mapper.getHotWord(map);
 %>
 <html>
 <head>
   <title>Title</title>
 </head>
 <body>
+
+  <%--饼状图--%>
   <div id="container" style="height: 100%"></div>
   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
   <script type="text/javascript">

@@ -5,8 +5,8 @@
 
 <!--namespace用于绑定一个Dao接口-->
 <mapper namespace="dao.HotWordMapper">
-    <select id="getHotWord" resultType="HotWord" parameterType="String">
-        select * from hot_video
+    <select id="getHotWord" resultType="HotWord" parameterType="map">
+        select * from ${table}
         <where>
             <if test="keyword != null">
                 keyword = #{keyword}

@@ -5,7 +5,7 @@ import model.HotWord;
 import java.util.*;
 
 public interface HotWordMapper {
-    List<HotWord> getHotWord(String keyword);
+    List<HotWord> getHotWord(Map map);
     int insertHotWord(Map map);
     int updateHotWord(Map map);
 }
