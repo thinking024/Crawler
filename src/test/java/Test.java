@@ -1,4 +1,6 @@
-import controller.GithubRepoPageProcessor;
+//import controller.GithubRepoPageProcessor;
+//import controller.SinaBlogProcessor;
+import model.User;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -7,17 +9,21 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.pipeline.JsonFilePipeline;
+//import us.codecraft.webmagic.Spider;
+//import us.codecraft.webmagic.pipeline.JsonFilePipeline;
+<<<<<<< HEAD
+import util.RankCrawler;
+=======
+import util.UserCrawler;
+>>>>>>> 526449b041a6fcaefb212a50bb8d850fe50c7947
 import util.VideoCrawler;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Hashtable;
+import java.util.ArrayList;
 
 public class Test {
 
-    @org.junit.Test
+    /*@org.junit.Test
     public void test() {
         Spider.create(new GithubRepoPageProcessor())
                 //从"https://github.com/code4craft"开始抓
@@ -27,8 +33,8 @@ public class Test {
                 .thread(5)
                 //启动爬虫
                 .run();
-    }
-    
+    }*/
+
     @org.junit.Test
     public void testHttpClient() {
         //建立一个新的请求客户端
@@ -79,19 +85,46 @@ public class Test {
         }
     }
 
-    @org.junit.Test
+    /*@org.junit.Test
     public void testVideoCrawler() {
-        HashSet hashSet = VideoCrawler.parseVideoHtml("https://search.bilibili.com/all?keyword=kpl");
-        for (Object o : hashSet) {
-            System.out.println(o);
+        ArrayList<Video> videos = VideoCrawler.getPageNumber("https://search.bilibili.com/all?keyword=kpl");
+        for (Video video : videos) {
+            System.out.println(video);
         }
+    }*/
+
+    @org.junit.Test
+    public void test_parseVideoInfoHtml() {
+        System.out.println(VideoCrawler.getHtml("https://"+ "www.bilibili.com/video/BV19C4y1W7th"));
+    }
+
+    @org.junit.Test
+    public void test_getVideoHtml() {
+        VideoCrawler.getHtml("https://search.bilibili.com/all?keyword=kpl");
+<<<<<<< HEAD
     }
 
     public static void main(String[] args) {
-
-        HashSet hashSet = VideoCrawler.parseVideoHtml("https://www.bilibili.com/ranking?spm_id_from=333.851.b_7072696d61727950616765546162.3");
-        for (Object o : hashSet) {
-            System.out.println(o);
-        }
+        RankCrawler.parseVideoListHtml("https://www.bilibili.com/ranking");
     }
 }
+=======
+
+
+    }
+
+    @org.junit.Test
+    public void test_parseUpListHtml() {
+        ArrayList<User> users = UserCrawler.parseUserListHtml("https://search.bilibili.com/upuser?keyword=计算机");
+        for (User user : users) {
+            System.out.println(user);
+        }
+    }
+
+    @org.junit.Test
+    public void test_pageNumber() {
+        System.out.println(VideoCrawler.getPageNumber("https://search.bilibili.com/all?keyword=987987"));
+    }
+
+}
+>>>>>>> 526449b041a6fcaefb212a50bb8d850fe50c7947

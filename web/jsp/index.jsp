@@ -4,7 +4,10 @@
     <title>$Title$</title>
   </head>
   <body>
-    <form action="/jsp/Search.jsp">
+    <form action="/jsp/RankVideo.jsp">
+        <input type="submit" value="排行榜">
+    </form>
+    <form action="/jsp/SearchVideo.jsp">
       <input type="text" name="keyword">
       <input type="submit">
     </form>
