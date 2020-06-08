@@ -11,11 +11,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 //import us.codecraft.webmagic.Spider;
 //import us.codecraft.webmagic.pipeline.JsonFilePipeline;
-<<<<<<< HEAD
 import util.RankCrawler;
-=======
 import util.UserCrawler;
->>>>>>> 526449b041a6fcaefb212a50bb8d850fe50c7947
 import util.VideoCrawler;
 
 import java.io.IOException;
@@ -34,7 +31,6 @@ public class Test {
                 //启动爬虫
                 .run();
     }*/
-
     @org.junit.Test
     public void testHttpClient() {
         //建立一个新的请求客户端
@@ -90,41 +86,8 @@ public class Test {
         ArrayList<Video> videos = VideoCrawler.getPageNumber("https://search.bilibili.com/all?keyword=kpl");
         for (Video video : videos) {
             System.out.println(video);
+<<<<<<< HEAD
+=======
         }
     }*/
-
-    @org.junit.Test
-    public void test_parseVideoInfoHtml() {
-        System.out.println(VideoCrawler.getHtml("https://"+ "www.bilibili.com/video/BV19C4y1W7th"));
-    }
-
-    @org.junit.Test
-    public void test_getVideoHtml() {
-        VideoCrawler.getHtml("https://search.bilibili.com/all?keyword=kpl");
-<<<<<<< HEAD
-    }
-
-    public static void main(String[] args) {
-        RankCrawler.parseVideoListHtml("https://www.bilibili.com/ranking");
-    }
 }
-=======
-
-
-    }
-
-    @org.junit.Test
-    public void test_parseUpListHtml() {
-        ArrayList<User> users = UserCrawler.parseUserListHtml("https://search.bilibili.com/upuser?keyword=计算机");
-        for (User user : users) {
-            System.out.println(user);
-        }
-    }
-
-    @org.junit.Test
-    public void test_pageNumber() {
-        System.out.println(VideoCrawler.getPageNumber("https://search.bilibili.com/all?keyword=987987"));
-    }
-
-}
->>>>>>> 526449b041a6fcaefb212a50bb8d850fe50c7947

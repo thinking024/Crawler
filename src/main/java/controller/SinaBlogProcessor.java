@@ -46,6 +46,7 @@ public class SinaBlogProcessor implements PageProcessor {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public static void main(String[] args) {
         Spider.create(new SinaBlogProcessor())
                 .addUrl("http://blog.sina.com.cn/s/articlelist_1487828712_0_1.html")
@@ -55,5 +56,8 @@ public class SinaBlogProcessor implements PageProcessor {
 =======
 
 >>>>>>> 3f211a0cc54bd5ce9a0196a28de80a5d5c2f6291
+=======
+
+>>>>>>> 526449b041a6fcaefb212a50bb8d850fe50c7947
 }
 */

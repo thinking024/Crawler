@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class VideoCrawler extends Crawler {
-
     // 解析爬取到的结果
     public static ArrayList<Video> parseVideoListHtml(String url) {
 
@@ -87,6 +86,7 @@ public class VideoCrawler extends Crawler {
         String html = getHtml(url);
         Document document = Jsoup.parse(html);
        /* System.out.println(document);
+<<<<<<< HEAD
         String title = document.getElementsByClass("tit").first().text();
         System.out.println(title);
         String uploadTime = document.getElementsByClass("video-data").first()
@@ -98,6 +98,24 @@ public class VideoCrawler extends Crawler {
         String danmu = document.getElementsByClass("video-data").last()
                 .getElementsByClass("dm").first().text();
         System.out.println(danmu);
+=======
+
+        String title = document.getElementsByClass("tit").first().text();
+        System.out.println(title);
+
+        String uploadTime = document.getElementsByClass("video-data").first()
+                .getElementsByTag("span").last().text();
+        System.out.println(uploadTime);
+
+        String play = document.getElementsByClass("video-data").last()
+                .getElementsByClass("view").first().text();
+        System.out.println(play);
+
+        String danmu = document.getElementsByClass("video-data").last()
+                .getElementsByClass("dm").first().text();
+        System.out.println(danmu);
+
+>>>>>>> 526449b041a6fcaefb212a50bb8d850fe50c7947
         String introduction = document.getElementsByClass("info open").first().text();
         System.out.println(introduction);
         String up = document.selectFirst("[itemprop=author]").attr("content");

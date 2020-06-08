@@ -20,7 +20,6 @@ public class Video {
 
     public String getScore() { return score; }
     public void setScore(String score) { this.score=score; }
-
     public String getHref() {
         return href;
     }
@@ -107,5 +106,4 @@ public class Video {
                 ", score='" + score + '\'' +
                 '}';
     }
-
 }
