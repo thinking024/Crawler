@@ -7,7 +7,7 @@
         <welcome-file>/jsp/index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!--<error-page>
+    <error-page>
         <error-code>400</error-code>
         <location>/jsp/ErrorPage.jsp</location>
     </error-page>
@@ -25,6 +25,6 @@
     <error-page>
         <error-code>500</error-code>
         <location>/jsp/ErrorPage.jsp</location>
-    </error-page>-->
+    </error-page>
 
 </web-app>

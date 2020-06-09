@@ -4,6 +4,8 @@
   <title>出错啦</title>
 </head>
 <body>
-  <img src="../image/error.png">
+  <div align="center">
+    <img src="../image/error.png" alt="出错啦" style="background-position:center;">
+  </div>
 </body>
 </html>
