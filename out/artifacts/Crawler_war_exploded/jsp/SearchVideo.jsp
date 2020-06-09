@@ -70,6 +70,7 @@
     <input type="submit">
   </form>
 
+  <div>本站热搜</div>
   <%
     for (HotWord word : hotWord) {
       String hotUrl = "SearchVideo.jsp?keyword=" + word.getKeyword();

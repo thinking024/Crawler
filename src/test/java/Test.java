@@ -8,12 +8,15 @@ import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 //import us.codecraft.webmagic.Spider;
 //import us.codecraft.webmagic.pipeline.JsonFilePipeline;
 import org.apache.ibatis.session.SqlSession;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import util.MybatisUtils;
 import util.UserCrawler;
 import util.VideoCrawler;
@@ -181,4 +184,33 @@ public class Test {
         sqlSession.close();
     }
 
+    @org.junit.Test
+    public void test() {
+        // 建立一个请求客户端
+        CloseableHttpClient httpClient= HttpClients.createDefault();
+        // 使用HttpGet的方式请求网址
+        HttpGet httpGet = new HttpGet("https://space.bilibili.com/392836434/");
+        // 设置请求头
+        httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36");
+        httpGet.setHeader("accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
+        // 获取网址的返回结果
+        CloseableHttpResponse response=null;
+        try {
+            response=httpClient.execute(httpGet);
+            // 获取返回结果中的实体
+            HttpEntity entity = response.getEntity();
+            String html = EntityUtils.toString(entity);
+            Document document = Jsoup.parse(html);
+            System.out.println(document);
+        } /*catch (ClientProtocolException e) {
+            e.printStackTrace();
+        }*/ catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            HttpClientUtils.closeQuietly(response);
+            HttpClientUtils.closeQuietly(httpClient);
+        }
+
+
+    }
 }

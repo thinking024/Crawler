@@ -49,8 +49,10 @@ public class Crawler {
             return Integer.valueOf(document.getElementsByClass("page-item last").text());
         } else if (document.getElementsByClass("page-item next").first() != null) { // 获取 下一页 按钮的前个元素
             return Integer.valueOf(document.getElementsByClass("page-item next").first().previousElementSibling().text());
-        } else {
+        } else if (document.getElementsByClass("page-item").last() != null) {
             return Integer.valueOf(document.getElementsByClass("page-item").last().text());
+        } else { // 没有分页按钮，只有一页
+            return 1;
         }
     }
 }

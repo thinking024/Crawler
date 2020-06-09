@@ -7,9 +7,13 @@
 <%
     SqlSession sqlSession = MybatisUtils.getSqlSession();
     HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
-    HashMap map = new HashMap();
-    map.put("table","hot_video");
-    List<HotWord> hotWord = mapper.getHotWord(map);
+    HashMap videoMap = new HashMap();
+    videoMap.put("table","hot_video");
+    List<HotWord> hotVideo = mapper.getHotWord(videoMap);
+
+    HashMap userMap = new HashMap();
+    userMap.put("table","hot_user");
+    List<HotWord> hotUser = mapper.getHotWord(userMap);
 %>
 <html>
 <head>
@@ -37,11 +41,11 @@
               orient: 'horizontal',
               x: 'left',
               data: [
-                  '<%=hotWord.get(0).getKeyword()%>',
-                  '<%=hotWord.get(1).getKeyword()%>',
-                  '<%=hotWord.get(2).getKeyword()%>',
-                  '<%=hotWord.get(3).getKeyword()%>',
-                  '<%=hotWord.get(4).getKeyword()%>'
+                  '<%=hotVideo.get(0).getKeyword()%>',
+                  '<%=hotVideo.get(1).getKeyword()%>',
+                  '<%=hotVideo.get(2).getKeyword()%>',
+                  '<%=hotVideo.get(3).getKeyword()%>',
+                  '<%=hotVideo.get(4).getKeyword()%>'
               ]
           },
           series: [{
@@ -68,11 +72,11 @@
                   }
               },
               data: [
-                  {value: <%=hotWord.get(0).getTimes()%>, name: '<%=hotWord.get(0).getKeyword()%>'},
-                  {value: <%=hotWord.get(1).getTimes()%>, name: '<%=hotWord.get(1).getKeyword()%>'},
-                  {value: <%=hotWord.get(2).getTimes()%>, name: '<%=hotWord.get(2).getKeyword()%>'},
-                  {value: <%=hotWord.get(3).getTimes()%>, name: '<%=hotWord.get(3).getKeyword()%>'},
-                  {value: <%=hotWord.get(4).getTimes()%>, name: '<%=hotWord.get(4).getKeyword()%>'}
+                  {value: <%=hotVideo.get(0).getTimes()%>, name: '<%=hotVideo.get(0).getKeyword()%>'},
+                  {value: <%=hotVideo.get(1).getTimes()%>, name: '<%=hotVideo.get(1).getKeyword()%>'},
+                  {value: <%=hotVideo.get(2).getTimes()%>, name: '<%=hotVideo.get(2).getKeyword()%>'},
+                  {value: <%=hotVideo.get(3).getTimes()%>, name: '<%=hotVideo.get(3).getKeyword()%>'},
+                  {value: <%=hotVideo.get(4).getTimes()%>, name: '<%=hotVideo.get(4).getKeyword()%>'}
               ]
           }]
       };
