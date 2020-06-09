@@ -160,23 +160,7 @@
       </table>
 
       <div >
-          <form action="SearchVideo.jsp" style="float:right;" >
 
-                <%--跳转页面时用到的keyword--%>
-                <input type="text" name="keywordHidden" style="display: none" value=<%=keyword%>>
-                <%
-                  if (order != "") // 未采用默认排序，提取出order字符串
-                    order = order.substring(7);
-                %>
-                <%--跳转页面时用到的order--%>
-                <input type="text" name="order" style="display: none" value=<%=order%>>
-                <%--跳转页面时用到的pageNo--%>
-                  <div class="form-inline">
-                     <input class="form-control" type="number" name="pageNo" required="required" min="1" max=<%=pageNumber%>>
-                     <input class="btn btn-primary" type="submit" value="跳到此页">
-                  </div>
-
-              </form>
              <span>当前页码：<%=pageNo%></span><span>(共<%=pageNumber%>页)</span>
             <ul class="pagination"  style="float:right;" >
              <%String first =  "SearchVideo.jsp?keyword=" + keyword + order;%>
@@ -203,6 +187,23 @@
 
            </ul>
 
+            <form action="SearchVideo.jsp" style="float:right;" >
+
+                            <%--跳转页面时用到的keyword--%>
+                            <input type="text" name="keywordHidden" style="display: none" value=<%=keyword%>>
+                            <%
+                              if (order != "") // 未采用默认排序，提取出order字符串
+                                order = order.substring(7);
+                            %>
+                            <%--跳转页面时用到的order--%>
+                            <input type="text" name="order" style="display: none" value=<%=order%>>
+                            <%--跳转页面时用到的pageNo--%>
+                              <div class="form-inline">
+                                 <input class="form-control" type="number" name="pageNo" required="required" min="1" max=<%=pageNumber%>>
+                                 <input class="btn btn-primary" type="submit" value="跳到此页">
+                              </div>
+
+                          </form>
 
           </div>
 
