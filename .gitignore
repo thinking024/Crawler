@@ -1,3 +1,6 @@
 .idea
 .log
 .class
+Test.java
+log/
+src/test/java/
