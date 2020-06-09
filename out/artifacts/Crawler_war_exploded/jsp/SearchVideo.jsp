@@ -1,10 +1,14 @@
 <%@ page import="util.VideoCrawler" %>
-<%@ page import="java.util.HashSet" %>
 <%@ page import="model.Video" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.HashMap" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="org.apache.ibatis.session.SqlSession" %>
+<%@ page import="util.MybatisUtils" %>
+<%@ page import="dao.HotWordMapper" %>
+<%@ page import="model.HotWord" %>
+<%@ page import="java.util.*" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%
+    request.setCharacterEncoding("utf-8");
     String keyword = null;
     if (request.getParameter("keyword") == null || "".equals(request.getParameter("keyword").trim())) {
         keyword = request.getParameter("keywordHidden"); // 初始页面 搜索空串 输入页码跳转 都走此分支
@@ -17,22 +21,44 @@
     ArrayList<Video> videos = null;
     int pageNo = 1; // 当前页号
     int pageNumber = 0; // 总页码
-    String order = ""; // 排序方式
+    String order = ""; // 排序方式，默认为综合排序
     if (request.getParameter("order") != null && !("".equals(request.getParameter("order")))) {
-        order = "&order=" + request.getParameter("order");
+        order = "&order=" + request.getParameter("order"); // 赋值为获取到的order参数
     }
-    out.println("order=" + order);
     if (keyword != null && !("".equals(keyword))) {
-      String url = "https://search.bilibili.com/all?keyword=" + keyword + order;
-      pageNumber = VideoCrawler.getPageNumber(url); // 获取搜索结果的总页数
-      if ( request.getParameter("pageNo") !=null && !("".equals(request.getParameter("pageNo")))) { // pageNo为跳转的页码数
-          pageNo = Integer.valueOf(request.getParameter("pageNo"));
-          url = url + "&page=" + pageNo;
-      }
-      System.out.println("url="+url);
-      videos = VideoCrawler.parseVideoListHtml(url);
+
+//      爬取页面数据
+        String url = "https://search.bilibili.com/all?keyword=" + keyword + order;
+        pageNumber = VideoCrawler.getPageNumber(url); // 获取搜索结果的总页数
+        if ( request.getParameter("pageNo") !=null && !("".equals(request.getParameter("pageNo")))) { // pageNo为跳转的页码数
+            pageNo = Integer.valueOf(request.getParameter("pageNo"));
+            url = url + "&page=" + pageNo;
+        }
+        System.out.println("url="+url);
+        videos = VideoCrawler.parseVideoListHtml(url);
+
+//      实现热搜词汇功能
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
+        HashMap map = new HashMap();
+        map.put("table","hot_video");
+        map.put("keyword",keyword.toLowerCase());
+        List<HotWord> hotWord = mapper.getHotWord(map);
+        if (hotWord == null || hotWord.isEmpty()) { // 不存在此热搜词，存入数据库
+            int result = mapper.insertHotWord(map);
+            System.out.println("result=" + result);
+        } else { // 已存在此热搜词，次数+1
+            int result = mapper.updateHotWord(map);
+            System.out.println("result=" + result);
+        }
+
     }
 
+    SqlSession sqlSession = MybatisUtils.getSqlSession();
+    HotWordMapper mapper = sqlSession.getMapper(HotWordMapper.class);
+    HashMap map = new HashMap();
+    map.put("table","hot_video");
+    List<HotWord> hotWord = mapper.getHotWord(map);
 %>
 <html>
 <head>
@@ -43,8 +69,23 @@
     <input type="text" name="keyword" required="required" onkeyup="this.value=this.value.replace(/[, ]/g,'')">
     <input type="submit">
   </form>
+
+  <%
+    for (HotWord word : hotWord) {
+      String hotUrl = "SearchVideo.jsp?keyword=" + word.getKeyword();
+  %>
+      <a href=<%=hotUrl%>>
+        <%=word.getKeyword()%>
+      </a>
+      <br>
+  <%
+    }
+  %>
+
 <%
   if (pageNumber != 0) {
+
+      // 通过href拼接上order参数
       String all = "SearchVideo.jsp?keyword=" + keyword;
       String click = "SearchVideo.jsp?keyword=" + keyword + "&order=click";
       String pubdate = "SearchVideo.jsp?keyword=" + keyword + "&order=pubdate";
@@ -98,12 +139,16 @@
       </div>
 
       <form action="SearchVideo.jsp">
+
+        <%--跳转页面时用到的keyword--%>
         <input type="text" name="keywordHidden" style="display: none" value=<%=keyword%>>
         <%
-          if (order != "")
+          if (order != "") // 未采用默认排序，提取出order字符串
               order = order.substring(7);
         %>
-        <input type="text" name="order" style="display: block" value=<%=order%>>
+          <%--跳转页面时用到的order--%>
+        <input type="text" name="order" style="display: none" value=<%=order%>>
+          <%--跳转页面时用到的pageNo--%>
         <input type="number" name="pageNo" required="required" min="1" max=<%=pageNumber%>>
         <input type="submit" value="跳到此页">
       </form>

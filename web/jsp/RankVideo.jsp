@@ -36,15 +36,17 @@
         	background-position: center;
         	background-attachment: fixed;
         }
-    </style
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
 
 </head>
 <body >
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 <%
   ArrayList<Video> videos = RankCrawler.parseVideoListHtml(url);
@@ -65,14 +67,14 @@
 					  </div>
 				</nav>
 				<br/>
-				<form action="RankVideo.jsp" method="get">
+				<form action="RankVideo.jsp" method="get"  style="float:right">
                 <select class="combobox" name="sel">
                   <option value="https://www.bilibili.com/ranking/all/0/0/1">日排行</option>
                   <option value="https://www.bilibili.com/ranking/all/0/0/3">三日排行</option>
                   <option value="https://www.bilibili.com/ranking/all/0/0/7">周排行</option>
                   <option value="https://www.bilibili.com/ranking/all/0/0/30">月排行</option>
                 </select>
-                <input type="submit" value="筛选">
+                <input  type="submit" value="筛选">
                 </form>
                 <h1><%=str%></h1>
                 <table class="table table-hover">

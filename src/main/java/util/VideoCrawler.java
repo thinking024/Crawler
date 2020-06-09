@@ -82,11 +82,10 @@ public class VideoCrawler extends Crawler {
         return videoList;
     }
 
-    public static String parseVideoInfoHtml(String url) {
+   /* public static void parseVideoInfoHtml(String url) {
         String html = getHtml(url);
         Document document = Jsoup.parse(html);
-       /* System.out.println(document);
-<<<<<<< HEAD
+       *//* System.out.println(document);
         String title = document.getElementsByClass("tit").first().text();
         System.out.println(title);
         String uploadTime = document.getElementsByClass("video-data").first()
@@ -99,6 +98,8 @@ public class VideoCrawler extends Crawler {
                 .getElementsByClass("dm").first().text();
         System.out.println(danmu);
 =======
+=======
+        System.out.println(document);
 
         String title = document.getElementsByClass("tit").first().text();
         System.out.println(title);
@@ -115,14 +116,12 @@ public class VideoCrawler extends Crawler {
                 .getElementsByClass("dm").first().text();
         System.out.println(danmu);
 
->>>>>>> 526449b041a6fcaefb212a50bb8d850fe50c7947
         String introduction = document.getElementsByClass("info open").first().text();
         System.out.println(introduction);
         String up = document.selectFirst("[itemprop=author]").attr("content");
-        System.out.println(up); */
+        System.out.println(up);
 
         String image = document.selectFirst("[itemprop=image]").attr("content");
-
-        return image;
-    }
+        System.out.println(image);
+    }*/
 }
