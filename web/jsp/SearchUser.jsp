@@ -84,15 +84,13 @@
             <li class="nav-item"><a class="nav-link" href="index.jsp" tabindex="-1">首页<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item"><a class="nav-link" href="SearchVideo.jsp">视频搜索</a></li>
-            <li class="nav-item"><a class="nav-link" href="SearchUser.jsp">up主搜索</a></li>
+            <li class="nav-item"><a class="nav-link" href="SearchUser.jsp">用户搜索</a></li>
             <li class="nav-item"><a class="nav-link" href="RankVideo.jsp">排行榜</a></li>
           </ul>
         </div>
-        <form action="SearchUser.jsp" style="float:right">
-          <div class="form-inline">
-            <input type="text" class="form-control" name="keyword" value="up搜索" style="float:left">
-            <input type="submit" class="btn btn-primary" value="搜索" style="float:left">
-          </div>
+        <form action="SearchUser.jsp" class="form-inline  my-2 my-lg-0">
+          <input required="required"  type="search" placeholder="用户搜索" class="form-control mr-sm-2" name="keyword" aria-label="用户搜索">
+          <button type="submit" class="btn btn-outline-success my-2 my-sm-0">搜索</button>
         </form>
       </nav>
 
@@ -118,7 +116,7 @@
       %>
       <br>
       <%
-        if (pageNumber != 0) {
+        if (pageNumber != 0 && users != null && !(users.isEmpty())) {
           // 通过href拼接上order参数
           String all = "SearchUser.jsp?keyword=" + keyword;
           String fans = "SearchUser.jsp?keyword=" + keyword + "&order=fans";

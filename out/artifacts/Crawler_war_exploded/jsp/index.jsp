@@ -42,26 +42,34 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link" href="index.jsp">首页</a></li>
             <li class="nav-item"><a class="nav-link" href="SearchVideo.jsp">视频搜索</a></li>
-            <li class="nav-item"><a class="nav-link" href="SearchUser.jsp">up主搜索</a></li>
-            <li class="nav-item"><a class="nav-link" href="RankVideo.jsp" tabindex="-1">热搜榜<span class="sr-only">(current)</span></a>
+            <li class="nav-item"><a class="nav-link" href="SearchUser.jsp">用户搜索</a></li>
+            <li class="nav-item"><a class="nav-link" href="RankVideo.jsp" tabindex="-1">排行榜<span class="sr-only">(current)</span></a>
             </li>
           </ul>
         </div>
       </nav>
       <br>
       <div>
-        <form class="form-group" action="SearchVideo.jsp" method="get" width="50%" style="float:left">
+        <%--<form class="form-group" action="SearchVideo.jsp" method="get" width="50%" style="float:left">
           <div class="form-inline">
-            <input type="text" class="form-control" name="keyword" value="视频搜索" style="float:left">
+            <input required="required" type="text" class="form-control" name="keyword" value="视频搜索" style="float:left">
             <input type="submit" class="btn btn-primary" value="搜索" style="float:left">
           </div>
+        </form>--%>
+        <form action="SearchVideo.jsp" class="form-inline  my-2 my-lg-0" style="float:left">
+          <input required="required"  type="search" placeholder="视频搜索" class="form-control mr-sm-2" name="keyword" aria-label="视频搜索">
+          <button type="submit" class="btn btn-outline-success my-2 my-sm-0">搜索</button>
         </form>
 
-        <form class="form-group" action="SearchUser.jsp" method="get" width="50%" style="float:right">
+        <%--<form class="form-group" action="SearchUser.jsp" method="get" width="50%" style="float:right">
           <div class="form-inline">
-            <input type="text" class="form-control" name="keyword" value="up主搜索">
+            <input required="required" type="text" class="form-control" name="keyword" value="用户搜索">
             <input type="submit" class="btn btn-primary" value="搜索" style="float:left">
           </div>
+        </form>--%>
+        <form action="SearchUser.jsp" class="form-inline  my-2 my-lg-0" style="float:right">
+          <input required="required"  type="search" placeholder="用户搜索" class="form-control mr-sm-2" name="keyword" aria-label="用户搜索">
+          <button type="submit" class="btn btn-outline-success my-2 my-sm-0">搜索</button>
         </form>
       </div>
     </div>
@@ -133,6 +141,7 @@
 
       //mychart.showLoading();//数据加载完之前先显示一段简单的loading动画
   </script>
+
   <div id="userContainer" style="height: 80%;width: 50%;float:right"></div>
   <script type="text/javascript" src="../js/echarts.min.js"></script>
 

@@ -71,7 +71,7 @@
             <li class="nav-item"><a class="nav-link" href="index.jsp" tabindex="-1">首页<span
                     class="sr-only">(current)</span></a></li>
             <li class="nav-item"><a class="nav-link" href="SearchVideo.jsp">视频搜索</a></li>
-            <li class="nav-item"><a class="nav-link" href="SearchUser.jsp">up主搜索</a></li>
+            <li class="nav-item"><a class="nav-link" href="SearchUser.jsp">用户搜索</a></li>
             <li class="nav-item"><a class="nav-link" href="RankVideo.jsp">排行榜</a></li>
           </ul>
         </div>

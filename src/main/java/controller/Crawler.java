@@ -1,6 +1,7 @@
 package controller;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.HttpClientUtils;
@@ -18,7 +19,7 @@ public class Crawler {
         CloseableHttpClient httpClient= HttpClients.createDefault();
         // 使用HttpGet的方式请求网址
         HttpGet httpGet = new HttpGet(url);
-        // 设置请求头
+        // 设置请求头，模拟用户代理
         httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2");
         // 获取网址的返回结果
         CloseableHttpResponse response=null;
@@ -27,11 +28,11 @@ public class Crawler {
             // 获取返回结果中的实体
             HttpEntity entity = response.getEntity();
             return EntityUtils.toString(entity);
-        } /*catch (ClientProtocolException e) {
+        } catch (ClientProtocolException e) {
             e.printStackTrace();
-        }*/ catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        } finally { // 关闭响应
             HttpClientUtils.closeQuietly(response);
             HttpClientUtils.closeQuietly(httpClient);
         }
